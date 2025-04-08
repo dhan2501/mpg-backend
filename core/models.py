@@ -93,6 +93,10 @@ class SocialMediaLink(models.Model):
 class Category(models.Model):
     category_name = models.CharField(max_length=250)
     slug = models.SlugField()
+    description = models.TextField(blank=True, null=True)
+    meta_title = models.CharField(max_length=255, help_text="SEO meta title", blank=True, null=True)
+    meta_description = models.TextField(help_text="SEO meta description", blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('category_name',)
