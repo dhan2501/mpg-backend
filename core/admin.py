@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Logo, MenuItem, SocialMediaLink,
+from .models import Product, Logo, MenuItem, SocialMediaLink
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
