@@ -83,8 +83,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # used for collectstatic (production)
-STATICFILES_BASE = BASE_DIR / 'assets'  # your React build goes here
-
+# STATICFILES_BASE = BASE_DIR / 'assets'  # your React build goes here
+STATICFILES_BASE = BASE_DIR / "staticfiles"
 # Dev or Prod build from React/Vite
 REACT_JS_BUILD_DIR = STATICFILES_BASE / 'frontend' / 'dev'
 if not DEBUG:
