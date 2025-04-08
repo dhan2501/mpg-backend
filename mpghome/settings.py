@@ -9,6 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w80+lhf!lmmq378uyu5t#s)x9*xpaaq$+)nl+w&*jj(ac1*z3m'
 DEBUG = True
 ALLOWED_HOSTS = ['*']  # Set domains/IPs in production
+CSRF_TRUSTED_ORIGINS = [
+    'https://mpg-backend-production.up.railway.app',
+]
 
 # === Installed Apps ===
 INSTALLED_APPS = [
