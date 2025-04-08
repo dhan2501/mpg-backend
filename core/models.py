@@ -90,6 +90,16 @@ class SocialMediaLink(models.Model):
     def __str__(self):
         return f"{self.get_platform_display()} ({self.location})"
 
+class Category(models.Model):
+    category_name = models.CharField(max_length=250)
+    slug = models.SlugField()
+
+    class Meta:
+        ordering = ('category_name',)
+
+    def __str__(self):
+        return self.category_name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
