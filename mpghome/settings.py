@@ -82,7 +82,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # used for collectstatic (production)
+# STATIC_ROOT = BASE_DIR / 'staticfiles'  # used for collectstatic (production)
 # STATICFILES_BASE = BASE_DIR / 'assets'  # your React build goes here
 STATICFILES_BASE = BASE_DIR / "staticfiles"
 # Dev or Prod build from React/Vite
