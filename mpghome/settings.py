@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',  # your app
+    'corsheaders',
 ]
 
 # === Middleware ===
@@ -34,6 +35,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 # === URL Configuration ===
@@ -67,7 +69,7 @@ WSGI_APPLICATION = 'mpghome.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
+CORS_ALLOW_ALL_ORIGINS = True
 DATABASES = {
     'default': dj_database_url.config(
         default='postgresql://postgres:HFRWsHaKJXtZchUVlAzQTXRPwyHtPoXi@hopper.proxy.rlwy.net:58108/railway',
