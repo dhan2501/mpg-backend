@@ -1,9 +1,6 @@
 from django.contrib import admin
-from .models import Category, Product, Logo, MenuItem, SocialMediaLink
+from .models import Product, Logo, MenuItem, SocialMediaLink
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'category_name')
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
