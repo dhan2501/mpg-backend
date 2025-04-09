@@ -2,7 +2,6 @@ from django.contrib import admin
 from django import forms
 from django.utils.html import format_html
 from .models import Product, MenuItem, SocialMediaLink, Category, Banner, Blog, ProductReview
-from tinymce.widgets import TinyMCE
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

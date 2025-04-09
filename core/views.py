@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from .serializers import ProductReviewSerializer
-from django.utils.decorators import method_decorator
 
 def index(request):
     return render(request, "index.html")
