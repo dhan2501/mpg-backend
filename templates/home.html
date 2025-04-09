@@ -1,18 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>MPG Stones</title>
-  <link rel="icon" href="{% static 'frontend/prod/vite.svg' %}" />
-  {% for css_path in reactjs_assets_css_paths %}
-    <link rel="stylesheet" href="{% static css_path %}">
-  {% endfor %}
+    <title>API Home Page</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background: #f9f9f9; }
+        h1 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
-  <div id="root"></div>
-  {% for js_path in reactjs_assets_js_paths %}
-    <script type="module" src="{% static js_path %}"></script>
-  {% endfor %}
+    <h1>Available API Endpoints</h1>
+    <!-- <ul>
+        {% for name, url in api_links.items %}
+            <li><a href="{{ url }}" target="_blank">{{ name }}</a></li>
+        {% endfor %}
+    </ul> -->
+    <ul>
+      <li><a href="/api/banners/" target="_blank">Banners</a></li>
+      <li><a href="/api/categories/" target="_blank">Categories</a></li>
+      <li><a href="/api/blogs/" target="_blank">Blogs</a></li>
+  </ul>
 </body>
 </html>
+

@@ -25,5 +25,3 @@ def blog_list(request):
     blogs = list(Blog.objects.values())
     return JsonResponse(blogs, safe=False)
 
-def home(request):
-    return 'Hello Home Page'
