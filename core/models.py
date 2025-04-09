@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from django.utils.text import slugify
+from django.utils.timezone import now
 
 
 # class Logo(models.Model):
@@ -104,6 +106,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
+    category = models.ForeignKey(Category,related_name='product', on_delete= models.CASCADE)
     image = models.ImageField(upload_to='products/')
     description = models.TextField(blank=True, null=True)
 
@@ -116,3 +119,38 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+class Banner(models.Model):
+    title = models.CharField(max_length=255, help_text="Main title text for the banner.")
+    subtitle = models.CharField(max_length=255, blank=True, null=True, help_text="Subtitle or supporting text.")
+    image = models.ImageField(
+        upload_to='banners/',
+        validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'webp'])],
+        help_text="Upload a banner image (JPG, PNG, WEBP)."
+    )
+    enquiry_button_text = models.CharField(max_length=100, default='Enquire Now', help_text="Text shown on the enquiry button.")
+    enquiry_button_link = models.URLField(help_text="URL the enquiry button should link to.")
+
+    def __str__(self):
+        return self.title or "Banner"
+
+
+class Blog(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    description = models.TextField()
+    image = models.ImageField(upload_to='blog_images/')
+    # category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE, related_name='blogs', blank=True)
+    meta_title = models.CharField(max_length=255, help_text="Meta title for SEO", blank=True)
+    meta_description = models.TextField(help_text="Meta description for SEO", blank=True)
+    content = models.TextField(help_text="Page content")
+    date_posted = models.DateTimeField(default=now)
+    # total_views = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title

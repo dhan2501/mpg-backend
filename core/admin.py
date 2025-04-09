@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Product, MenuItem, SocialMediaLink, Category
+from django.utils.html import format_html
+from .models import Product, MenuItem, SocialMediaLink, Category, Banner, Blog
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -26,3 +27,26 @@ class SocialMediaLinkAdmin(admin.ModelAdmin):
     list_display = ('platform', 'url', 'location', 'is_active')
     list_filter = ('location', 'is_active')
     search_fields = ('platform', 'url')
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ('title', 'enquiry_button_text', 'enquiry_button_link', 'image_tag')
+
+    def image_tag(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" height="auto" />', obj.image.url)
+        return "-"
+    image_tag.short_description = 'Image'
+
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'date_posted', 'image_tag')
+    prepopulated_fields = {'slug': ('title',)}
+    list_filter = ('title', 'date_posted')
+
+    def image_tag(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" height="auto" />', obj.image.url)
+        return "-"
+    image_tag.short_description = 'Image'
