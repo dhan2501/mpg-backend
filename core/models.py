@@ -2,30 +2,30 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 
 
-class Logo(models.Model):
-    title = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(
-        upload_to='logos/',
-        validators=[FileExtensionValidator(['jpg', 'jpeg', 'svg', 'webp'])],
-    )
-    alt_text = models.CharField(max_length=255, blank=True, null=True)
+# class Logo(models.Model):
+#     title = models.CharField(max_length=255, blank=True, null=True)
+#     image = models.ImageField(
+#         upload_to='logos/',
+#         validators=[FileExtensionValidator(['jpg', 'jpeg', 'svg', 'webp'])],
+#     )
+#     alt_text = models.CharField(max_length=255, blank=True, null=True)
 
-    def clean(self):
-        # Validate image content type
-        if self.image:
-            if not self.image.name.endswith(('.jpg', '.jpeg', '.svg', '.webp', '.png')):
-                raise ValidationError('Invalid file type: only JPG, SVG, and WEBP are allowed.')
+#     def clean(self):
+#         # Validate image content type
+#         if self.image:
+#             if not self.image.name.endswith(('.jpg', '.jpeg', '.svg', '.webp', '.png')):
+#                 raise ValidationError('Invalid file type: only JPG, SVG, and WEBP are allowed.')
 
-        # Check dimensions or other properties (optional)
-        if self.image.name.endswith(('.jpg', '.jpeg', '.webp')):
-            try:
-                img = Image.open(self.image)
-                img.verify()
-            except Exception as e:
-                raise ValidationError('Uploaded file is not a valid image.')
+#         # Check dimensions or other properties (optional)
+#         if self.image.name.endswith(('.jpg', '.jpeg', '.webp')):
+#             try:
+#                 img = Image.open(self.image)
+#                 img.verify()
+#             except Exception as e:
+#                 raise ValidationError('Uploaded file is not a valid image.')
 
-    def __str__(self):
-        return self.title if self.title else "Website Logo"
+#     def __str__(self):
+#         return self.title if self.title else "Website Logo"
     
 
 class MenuItem(models.Model):
@@ -90,15 +90,16 @@ class SocialMediaLink(models.Model):
     def __str__(self):
         return f"{self.get_platform_display()} ({self.location})"
 
-# class Category(models.Model):
-#     category_name = models.CharField(max_length=250)
-#     slug = models.SlugField()
+class Category(models.Model):
+    category_name = models.CharField(max_length=250)
+    slug = models.SlugField()
+    is_active = models.BooleanField(default=True)
 
-#     class Meta:
-#         ordering = ('category_name',)
+    class Meta:
+        ordering = ('category_name',)
 
-#     def __str__(self):
-#         return self.category_name 
+    def __str__(self):
+        return self.category_name 
 
 
 class Product(models.Model):
