@@ -1,0 +1,75 @@
+<!-- <form method="POST" action="">
+    {% csrf_token %}
+    <label for="name">Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label for="comment">Comment:</label><br>
+    <textarea name="comment" rows="5" required></textarea><br><br>
+
+    <button type="submit">Submit Review</button>
+</form> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Review</title>
+    <style>
+        /* Basic popup style */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f0fff0;
+            border: 2px solid #4CAF50;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #999;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label for="comment">Comment:</label><br>
+        <textarea name="comment" rows="5" required></textarea><br><br>
+
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <!-- Popup Message -->
+    <div class="popup" id="thankPopup">
+        <strong>Thank you!</strong><br>
+        Your review has been submitted.
+    </div>
+
+    {% if success %}
+    <script>
+        // Show popup if success
+        document.addEventListener('DOMContentLoaded', function () {
+            const popup = document.getElementById('thankPopup');
+            popup.style.display = 'block';
+
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        });
+    </script>
+    {% endif %}
+
+</body>
+</html>

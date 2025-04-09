@@ -59,6 +59,11 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+}
 # === WSGI Application ===
 WSGI_APPLICATION = 'mpghome.wsgi.application'
 

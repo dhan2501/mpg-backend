@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django import forms
 from django.utils.html import format_html
-from .models import Product, MenuItem, SocialMediaLink, Category, Banner, Blog
+from .models import Product, MenuItem, SocialMediaLink, Category, Banner, Blog, ProductReview
+from tinymce.widgets import TinyMCE
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -50,3 +52,10 @@ class BlogAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="100" height="auto" />', obj.image.url)
         return "-"
     image_tag.short_description = 'Image'
+
+
+@admin.register(ProductReview)
+class ProductReviewAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'created_at', 'is_active')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('name', 'email', 'comment')

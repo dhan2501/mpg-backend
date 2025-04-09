@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Blog</title>
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #e0ffe0;
+            border: 2px solid #4CAF50;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #999;
+            z-index: 999;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h2>Create Blog Post</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label>Title:</label><br>
+        <input type="text" name="title" required><br><br>
+
+        <label>Description:</label><br>
+        <textarea name="description" required></textarea><br><br>
+
+        <label>Image:</label><br>
+        <input type="file" name="image"><br><br>
+
+        <label>Meta Title:</label><br>
+        <input type="text" name="meta_title"><br><br>
+
+        <label>Meta Description:</label><br>
+        <textarea name="meta_description"></textarea><br><br>
+
+        <label>Content:</label><br>
+        <textarea name="content" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Success Popup -->
+    <div class="popup" id="successPopup">
+        <strong>Success!</strong> Blog post created successfully.
+    </div>
+
+
+    <!-- {% if success %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const popup = document.getElementById('successPopup');
+            popup.style.display = 'block';
+
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        });
+    </script>
+    {% endif %} -->
+
+   <!-- Load CKEditor -->
+   <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+   <script>
+       // Initialize CKEditor
+       CKEDITOR.replace('description');
+       CKEDITOR.replace('content');
+   </script>
+
+   {% if success %}
+   <script>
+       // Show popup after submission
+       document.addEventListener('DOMContentLoaded', function () {
+           const popup = document.getElementById('successPopup');
+           popup.style.display = 'block';
+           setTimeout(function () {
+               popup.style.display = 'none';
+           }, 3000);
+       });
+   </script>
+   {% endif %}
+
+</body>
+</html>

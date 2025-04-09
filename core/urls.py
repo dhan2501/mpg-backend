@@ -8,5 +8,9 @@ urlpatterns = [
     path('api/categories/', views.category_list, name='category-list'),
     path('api/menuitems/', views.menu_list, name='menu-list'),
     path('api/blogs/', views.blog_list, name='blog-list'),
-    path('', index),
+    path('api/reviews/', views.reviews_list, name='reviews-list'),
+    path('submit-review/', views.submit_review, name='submit_review'),
+    # path('thank-you/', views.thank_you, name='thank_you'),  # Add this if you want a thank-you page
+    path('create-blog/', views.create_blog, name='create_blog'),
+    # path('blog-success/', views.blog_success, name='blog_success'),  # Optional success page
 ]

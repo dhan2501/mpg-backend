@@ -154,3 +154,14 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class ProductReview(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=False)  # Inactive by default
+
+    def __str__(self):
+        return f"Review by {self.name}"
