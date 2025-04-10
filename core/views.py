@@ -37,8 +37,22 @@ def product_list_api(request):
     return JsonResponse(data, safe=False)
 
 def category_list(request):
-    categories = list(Category.objects.values())
-    return JsonResponse(categories, safe=False)
+    # categories = list(Category.objects.values())
+    # return JsonResponse(categories, safe=False)
+    categories = Category.objects.filter(is_active=True)
+    data = []
+
+    for category in categories:
+        data.append({
+            "id": category.id,
+            "category_name": category.category_name,
+            "slug": category.slug,
+            "image": request.build_absolute_uri(category.image.url) if category.image else None,
+            "is_active": category.is_active
+        })
+
+    return JsonResponse(data, safe=False)
+
 
 def banner_api(request):
     banners = Banner.objects.all()

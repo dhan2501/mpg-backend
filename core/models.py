@@ -95,6 +95,7 @@ class SocialMediaLink(models.Model):
 class Category(models.Model):
     category_name = models.CharField(max_length=250)
     slug = models.SlugField()
+    image = models.ImageField(upload_to='categories/', null=True, blank=True) 
     is_active = models.BooleanField(default=True)
 
     class Meta:
