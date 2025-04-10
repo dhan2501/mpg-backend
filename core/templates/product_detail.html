@@ -1,0 +1,106 @@
+<!-- core/templates/product_detail.html -->
+<!-- <h1>Product Details Page</h1>
+
+<h2>Submit a Review</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+<h2>Customer Reviews</h2>
+<ul>
+    {% for review in reviews %}
+        <li><strong>{{ review.name }}</strong>: {{ review.comment }}</li>
+    {% empty %}
+        <li>No reviews yet.</li>
+    {% endfor %}
+</ul> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ product.name }} - Details</title>
+    
+</head>
+<body>
+    <pre>{{ product }}</pre>
+    <div class="product-container">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+            <img src="/static/images/no-image.png" alt="No image">
+        {% endif %}
+    
+        <div class="product-info">
+            <h1>{{ product.name }}</h1>
+            <div class="description">{{ product.description }}</div>
+        </div>
+    </div>
+    
+    <h2>Customer Reviews</h2>
+    <div id="reviewsList">
+        {% for review in product.reviews.all %}
+            <div class="review">
+                <strong>{{ review.name }}</strong> ({{ review.created_at|date:"Y-m-d" }}):<br>
+                {{ review.comment }}
+            </div>
+        {% empty %}
+            <p>No reviews yet.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Leave a Review</h2>
+    <form id="reviewForm">
+        <input type="hidden" name="product" value="{{ product.id }}">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <label>Comment:</label><br>
+        <textarea name="comment" rows="5" required></textarea><br><br>
+
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <div class="popup" id="thankPopup">
+        <strong>Thank you!</strong> Your review has been submitted.
+    </div>
+
+    <script>
+    document.getElementById('reviewForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch('http://127.0.0.1:8000/api/reviews/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Submission failed");
+            return response.json();
+        })
+        .then(data => {
+            const popup = document.getElementById('thankPopup');
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+                location.reload();
+            }, 2000);
+        })
+        .catch(error => {
+            alert("Error submitting review.");
+            console.error(error);
+        });
+    });
+    </script>
+</body>
+</html>

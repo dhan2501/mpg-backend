@@ -157,6 +157,7 @@ class Blog(models.Model):
     
 
 class ProductReview(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     name = models.CharField(max_length=100)
     email = models.EmailField()
     comment = models.TextField()

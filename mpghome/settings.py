@@ -99,6 +99,7 @@ USE_TZ = True
 # === Static & Media Files ===
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # STATIC_ROOT = BASE_DIR / 'staticfiles'  # used for collectstatic (production)
 # STATICFILES_BASE = BASE_DIR / 'assets'  # your React build goes here

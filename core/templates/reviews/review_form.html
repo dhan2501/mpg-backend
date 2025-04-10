@@ -12,7 +12,7 @@
     <button type="submit">Submit Review</button>
 </form> -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,6 +38,7 @@
 
     <form method="POST">
         {% csrf_token %}
+        <input type="hidden" name="product" value="5"> 
         <label for="name">Name:</label><br>
         <input type="text" name="name" required><br><br>
 
@@ -50,7 +51,6 @@
         <button type="submit">Submit Review</button>
     </form>
 
-    <!-- Popup Message -->
     <div class="popup" id="thankPopup">
         <strong>Thank you!</strong><br>
         Your review has been submitted.
@@ -63,13 +63,206 @@
             const popup = document.getElementById('thankPopup');
             popup.style.display = 'block';
 
-            // Auto-hide after 3 seconds
             setTimeout(() => {
                 popup.style.display = 'none';
             }, 3000);
         });
     </script>
     {% endif %}
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Review</title>
+  <style>
+    /* Basic popup style */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #f0fff0;
+      border: 2px solid #4CAF50;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #999;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+    <div id="product-container"></div>
+  <form id="reviewForm" method="post">
+    {% csrf_token %}
+    <!-- Replace product ID with dynamic logic as needed -->
+    <input type="hidden" name="product" value="{{ product.id }}">
+
+    <label for="name">Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label for="comment">Comment:</label><br>
+    <textarea name="comment" rows="5" required></textarea><br><br>
+
+    <button type="submit">Submit Review</button>
+  </form>
+
+  <!-- Popup Message -->
+  <div class="popup" id="thankPopup">
+    <strong>Thank you!</strong><br>
+    Your review has been submitted.
+  </div>
+
+  <script>
+    // document.getElementById('reviewForm').addEventListener('submit', function(e) {
+    //   e.preventDefault();
+
+    //   const formData = new FormData(this);
+    //   const data = Object.fromEntries(formData);
+
+    //   fetch('http://127.0.0.1:8000/api/reviews/', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data)
+    //   })
+    //   .then(response => {
+    //     if (response.ok) {
+    //       showThankYouPopup();
+    //       this.reset(); // Clear form
+    //     } else {
+    //       return response.json().then(data => {
+    //         alert('Error: ' + JSON.stringify(data));
+    //       });
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
+    // });
+    // function getCookie(name) {
+    // let cookieValue = null;
+    // if (document.cookie && document.cookie !== '') {
+    //     const cookies = document.cookie.split(';');
+    //     for (let cookie of cookies) {
+    //     cookie = cookie.trim();
+    //     if (cookie.startsWith(name + '=')) {
+    //         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+    //         break;
+    //     }
+    //     }
+    // }
+    // return cookieValue;
+    // }
+
+    // document.getElementById('reviewForm').addEventListener('submit', function (e) {
+    // e.preventDefault();
+    // const formData = new FormData(this);
+    // const data = Object.fromEntries(formData);
+
+    // fetch('http://127.0.0.1:8000/api/reviews/', {
+    //     method: 'POST',
+    //     headers: {
+    //     'Content-Type': 'application/json',
+    //     'X-CSRFToken': getCookie('csrftoken')
+    //     },
+    //     body: JSON.stringify(data)
+    // })
+    //     .then(response => {
+    //     if (response.ok) {
+    //         showThankYouPopup();
+    //         this.reset();
+    //     } else {
+    //         return response.json().then(data => {
+    //         alert('Error: ' + JSON.stringify(data));
+    //         });
+    //     }
+    //     })
+    //     .catch(error => console.error('Error:', error));
+    // });
+
+
+    // function showThankYouPopup() {
+    //   const popup = document.getElementById('thankPopup');
+    //   popup.style.display = 'block';
+    //   setTimeout(() => {
+    //     popup.style.display = 'none';
+    //   }, 3000);
+    // }
+  </script>
+
+<script>
+    const productId = 5;  // dynamically get this (e.g. from URL)
+    document.getElementById('productId').value = productId;
+
+    // Fetch and display product info
+    fetch(`http://127.0.0.1:8000/api/products/${productId}/`)
+      .then(res => res.json())
+      .then(product => {
+        document.getElementById('product-container').innerHTML = `
+          <h2>${product.name}</h2>
+          <p>${product.description}</p>
+          <img src="${product.image}" alt="${product.name}" width="200">
+        `;
+      });
+
+    // Fetch and display reviews
+    function loadReviews() {
+      fetch(`http://127.0.0.1:8000/api/products/${productId}/reviews/`)
+        .then(res => res.json())
+        .then(reviews => {
+          const container = document.getElementById('reviews-container');
+          container.innerHTML = '';
+          reviews.forEach(r => {
+            container.innerHTML += `
+              <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc;">
+                <strong>${r.name}</strong> <em>(${r.email})</em><br>
+                <p>${r.comment}</p>
+              </div>
+            `;
+          });
+        });
+    }
+
+    loadReviews();
+
+    // Handle review submission
+    document.getElementById('reviewForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+
+      fetch('http://127.0.0.1:8000/api/reviews/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        if (response.message) {
+          document.getElementById('popup').style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('popup').style.display = 'none';
+          }, 3000);
+          this.reset();
+          loadReviews();
+        } else {
+          alert("Error: " + JSON.stringify(response));
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
