@@ -166,4 +166,11 @@ class ProductReview(models.Model):
     is_active = models.BooleanField(default=False)  # Inactive by default
 
     def __str__(self):
-        return f"Review by {self.name}"
+        return f"Review by {self.name}"  
+    
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
