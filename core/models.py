@@ -133,7 +133,7 @@ class Banner(models.Model):
     enquiry_button_link = models.URLField(help_text="URL the enquiry button should link to.")
 
     def __str__(self):
-        return self.title or "Banner"
+        return self.title or "Banner" 
 
 
 class Blog(models.Model):
