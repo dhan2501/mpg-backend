@@ -9,7 +9,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('name','description')
+    # prepopulated_fields = {'slug': ('name',)}
 
 
 # @admin.register(Logo)

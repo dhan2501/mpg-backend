@@ -21,18 +21,26 @@ def menu_list(request):
     menuitems = list(MenuItem.objects.values())
     return JsonResponse(menuitems, safe=False)
 
-# def product_list(request):
-#     products = list(Product.objects.values())
-#     return JsonResponse(products, safe=False)
+def product_list(request):
+    products = list(Product.objects.values())
+    return JsonResponse(products, safe=False)
 def product_list_api(request):
     products = Product.objects.all()
     data = []
 
     for product in products:
+        image_url = request.build_absolute_uri(product.image.url) if product.image else None
         data.append({
             "name": product.name,
-            "image": product.image.url if product.image else None,
-        })
+            "image": image_url,
+            # "product_category" : product.category,
+            # "description" : product.description,
+            # "meta_title": product.meta_title,
+            # "meta_description" : product.meta_description,
+            # "og_title" : product.og_title,
+            # "og_decription" : product.og_description
+
+    })
 
     return JsonResponse(data, safe=False)
 
@@ -72,9 +80,26 @@ def banner_api(request):
 
     return JsonResponse(data, safe=False)
 
+# def blog_list(request):
+#     blogs = list(Blog.objects.values())
+#     return JsonResponse(blogs, safe=False)
 def blog_list(request):
-    blogs = list(Blog.objects.values())
-    return JsonResponse(blogs, safe=False)
+    blogs = Blog.objects.all()
+    data = []
+
+    for blog in blogs:
+        data.append({
+            "id": blog.id,
+            "slug": blog.slug,
+            "title": blog.title,
+            "content": blog.description,
+            "image": request.build_absolute_uri(blog.image.url) if blog.image else None,
+            "meta_title": blog.meta_title,
+            "meta-description": blog.meta_description,
+            # Add other fields you want
+        })
+
+    return JsonResponse(data, safe=False)
 
 def product_api(request, pk):
     product = get_object_or_404(Product, id=pk)
